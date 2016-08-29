@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include ./partials/head %>
+    </head>
+    <body>
+        <header>
+            <% include ./partials/header %>
+        </header>
+        <div class="container">
+            <h2>Results for :<strong><%= query %></strong> <small class="pull-right"><form id="result-submit"><input type="text" class="form-control" id="query" placeholder="Enter a search term..."/></form></small></h2>
+            
+        <div class="panel-body">
+            <ul id="timeline" class="timeline">
+                <% tweets.forEach(function(tweet, index) { %>
+                
+                <% if(index % 2 == 0) {%>
+                    <li class="timeline-inverted">
+                <% } else {%>
+                    <li>
+                <% } %>
+                    <% if(tweet.in_reply_to_status_id) { %>
+                    <div class="timeline-badge info"><i class="fa fa-reply"></i></div>
+                    <% } else { %>
+                    <div class="timeline-badge success"><i class="fa fa-twitter"></i></div>
+                    <% } %>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title"><a href="https://twitter.com/<%= tweet.user.screen_name %>" target="_blank"><%= tweet.user.name %></a> says...</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p><%= tweet.text %></p>
+                            <hr />
+                            <p class="small"><span class="btn btn-sm"><i class="fa fa-heart-o"></i> <%= tweet.favorite_count %></span> | <span class="btn btn-sm"><i class="fa fa-reply"></i> <%= tweet.retweet_count %></span> <span class="pull-right"><a href="https://twitter.com/statuses/<%= tweet.id_str %>" target="_blank" class="btn btn-info btn-sm">View Tweet</a></span></p>
+                        </div>
+                    </div>
+                </li>
+            <% }); %>
+            </ul>
+        </div>            
+        
+        </div>
+        <footer>
+            <% include ./partials/footer %>
+        </footer>
+
+    </body>
+</html>
