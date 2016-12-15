@@ -20,7 +20,11 @@ exports.results = function(req, res){
         db.saveDatabase();
 
         client.get('search/tweets', {q:query}, function(error, tweets, response){
-            res.render('results', {query: query, tweets: tweets.statuses});
+            if(error){
+                res.send(error);
+            } else {
+                res.render('results', {query: query, tweets: tweets.statuses});
+            }
         })
     } else {
         res.send('Error');
